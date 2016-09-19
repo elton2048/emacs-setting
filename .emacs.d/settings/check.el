@@ -1,5 +1,11 @@
-(require 'package)
-(package-initialize)
+;; Require MELPA packages
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   '("melpa" . "http://melpa.org/packages/")
+   t)
+  (package-initialize))
 
 (defun ensure-package-installed (&rest packages)
   "Assure every package is installed, ask for installation if it’s not.
@@ -23,7 +29,7 @@ Return a list of installed packages or nil for every skipped package."
 ;; (setq prelude-packages 'evil 'avy 'web-mode 'typescript-mode 'sass-mode 'helm 'window-numbering 'smartparens)
 
 (ensure-package-installed
-  'evil 'avy 'web-mode 'typescript-mode 'sass-mode 'helm 'window-numbering 'smartparens) ;  --> (nil nil) if iedit and magit are already installed
+  'evil 'avy 'company 'color-theme 'flycheck 'avy-flycheck 'window-number 'helm 'window-numbering 'smartparens 'bookmark+ 'highlight-parentheses 'yasnippet 'rainbow-mode 'web-mode 'typescript-mode 'sass-mode 'yaml-mode ) ;  --> (nil nil) if iedit and magit are already installed
 
 ;; activate installed packages
 (package-initialize)

@@ -1,4 +1,15 @@
-(load-file "~/.emacs.d/check.el")
+(add-to-list 'load-path "~/.emacs.d/settings")
+
+;; (load-file "~/.emacs.d/evernote-mode.el")
+
+;; (require 'evernote-mode)
+
+;; Using superuser to modify the file if necessary
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -7,7 +18,9 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(bmkp-last-as-first-bookmark-file "c:\\Users\\Dell\\AppData\\Roaming\\.emacs.d\\bookmarks")
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(company-dabbrev-downcase nil)
+ '(company-idle-delay 0)
  '(custom-enabled-themes (quote (tango-dark)))
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
@@ -25,9 +38,12 @@
 	 (speedbar-file-key-map)
 	 (speedbar-buffers-key-map)
 	 (anaconda-mode-map))))
- '(menu-bar-mode t)
+ '(menu-bar-mode nil)
+ '(package-selected-packages
+   (quote
+	(rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
- '(python-shell-interpreter "C:/Users/Dell/Anaconda3/Scripts/jupyter-console.exe")
+ ;; '(python-shell-interpreter "C:/Users/Dell/Anaconda3/Scripts/jupyter-console.exe")
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
  '(web-mode-script-padding 0))
@@ -80,6 +96,10 @@
 
 ;; Bookmark+ mode
 (require 'bookmark+)
+
+;; ido mode
+(require 'ido)
+(ido-mode t)
 
 
 ;; Require highlight parenthese
@@ -170,6 +190,7 @@
 ;; Key setting
 (define-key global-map [f12] 'helm-swoop)
 (define-key global-map [C-f12] 'helm-multi-swoop)
+(define-key global-map [f6] 'eval-buffer)
 (define-key evil-motion-state-map (kbd "SPC") #'avy-goto-word-1)
 (define-key evil-motion-state-map (kbd "M-SPC") #'avy-goto-char)
 
@@ -258,5 +279,3 @@ the same coding systems as Emacs."
     ad-do-it))
 
 
-;; Load the test Emacs lisp
-(load-file "~/.emacs.d/test.el")
