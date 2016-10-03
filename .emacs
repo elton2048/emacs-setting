@@ -1,4 +1,8 @@
-(add-to-list 'load-path "~/.emacs.d/settings")
+(add-to-list 'load-path "/home/elee/.emacs.d/settings/")
+
+(load "customfunction")
+(load "test")
+(load "check")
 
 ;; (load-file "~/.emacs.d/evernote-mode.el")
 
@@ -18,7 +22,7 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+ '(bmkp-last-as-first-bookmark-file "/home/elee/.emacs.d/bookmarks")
  '(company-dabbrev-downcase nil)
  '(company-idle-delay 0)
  '(custom-enabled-themes (quote (tango-dark)))
@@ -41,9 +45,8 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-	(rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	(magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
- ;; '(python-shell-interpreter "C:/Users/Dell/Anaconda3/Scripts/jupyter-console.exe")
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
  '(web-mode-script-padding 0))
@@ -135,6 +138,7 @@
 (add-to-list 'auto-mode-alist '("\\.html$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.js$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
@@ -144,24 +148,24 @@
     ad-do-it))
 
 ;; Use flycheck to check js
-(require 'flycheck)
-(add-hook 'js-mode-hook
-          (lambda () (flycheck-mode t)))
-(require 'avy-flycheck)
+;; (require 'flycheck)
+;; (add-hook 'js-mode-hook
+;;           (lambda () (flycheck-mode t)))
+;; (require 'avy-flycheck)
 
-(flycheck-define-checker jsxhint-checker
-  "A JSX syntax and style checker based on JSXHint."
+;; (flycheck-define-checker jsxhint-checker
+;;   "A JSX syntax and style checker based on JSXHint."
 
-  :command ("jsxhint" source)
-  :error-patterns
-  ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
-  :modes (web-mode))
-(add-hook 'web-mode-hook
-          (lambda ()
-            (when (equal web-mode-content-type "jsx")
-              ;; enable flycheck
-              (flycheck-select-checker 'jsxhint-checker)
-              (flycheck-mode))))
+;;   :command ("jsxhint" source)
+;;   :error-patterns
+;;   ((error line-start (1+ nonl) ": line " line ", col " column ", " (message) line-end))
+;;   :modes (web-mode))
+;; (add-hook 'web-mode-hook
+;;           (lambda ()
+;;             (when (equal web-mode-content-type "jsx")
+;;               ;; enable flycheck
+;;               (flycheck-select-checker 'jsxhint-checker)
+;;               (flycheck-mode))))
 
 (require 'sass-mode)
 
@@ -188,11 +192,24 @@
 (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
 
 ;; Key setting
+(defun web-mode-refresh()
+  "Refresh the page in web-mode"
+  (interactive)
+  (web-mode-reload)
+  (web-mode-buffer-indent)
+  )
+(define-key global-map (kbd "M-n") 'scroll-up)
+(define-key global-map (kbd "M-p") 'scroll-down)
+
+;; (define-key global-map (kbd "M-d") 'scroll-up-half)
+;; (define-key global-map (kbd "M-u") 'scroll-down-half)
+
 (define-key global-map [f12] 'helm-swoop)
 (define-key global-map [C-f12] 'helm-multi-swoop)
 (define-key global-map [f6] 'eval-buffer)
+(define-key web-mode-map [f5] 'web-mode-refresh)
 (define-key evil-motion-state-map (kbd "SPC") #'avy-goto-word-1)
-(define-key evil-motion-state-map (kbd "M-SPC") #'avy-goto-char)
+(define-key evil-motion-state-map (kbd "C-SPC") #'avy-goto-char)
 
 ;; Mode setting for using Evil
 (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
