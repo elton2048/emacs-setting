@@ -1,3 +1,6 @@
+(add-to-list 'load-path "/home/elee/.emacs.d/indent-guide/")
+(load "indent-guide")
+
 (add-to-list 'load-path "/home/elee/.emacs.d/settings/")
 
 (load "customfunction")
@@ -28,6 +31,7 @@
  '(custom-enabled-themes (quote (tango-dark)))
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
+ '(electric-indent-mode nil)
  '(evil-overriding-maps
    (quote
 	((Buffer-menu-mode-map)
@@ -42,10 +46,11 @@
 	 (speedbar-file-key-map)
 	 (speedbar-buffers-key-map)
 	 (anaconda-mode-map))))
+ '(global-aggressive-indent-mode t)
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-	(magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	(evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -77,16 +82,28 @@
 (setq scroll-conservatively 101)
 
 (setq scroll-margin 8)
+;; Set the initial size of opening Emacs
 (setq initial-frame-alist
 	  '((top . 30) (left . 1) (width . 140) (height . 40)))
 (global-set-key "\C-x\C-b" 'buffer-menu)
+
+;; Set the default indentation of using Emacs
 (setq-default indent-tabs-node nil)
 (setq-default tab-width 4)
 (setq indent-line-funtion 'insert-tab)
 (setq org-log-done 'time)
+;; Setting the number line on the left side
 (global-linum-mode 1)
+;; Using helm-M-x using Ctrl-Meta-x
 (global-set-key (kbd "C-M-x") 'helm-M-x)
+;; Display the time in the Emacs
 (display-time)
+(global-aggressive-indent-mode 1)
+
+;; Setting of the indent-guide mode(indent-guide.el)
+(indent-guide-global-mode)
+(set-face-background 'indent-guide-face "transparent")
+(set-face-foreground 'indent-guide-face "yellow")
 
 ;; Require plugin undo-tree
 (require 'undo-tree)
@@ -207,6 +224,7 @@
 (define-key global-map [f12] 'helm-swoop)
 (define-key global-map [C-f12] 'helm-multi-swoop)
 (define-key global-map [f6] 'eval-buffer)
+(define-key global-map [f7] 'evil-mode)
 (define-key web-mode-map [f5] 'web-mode-refresh)
 (define-key evil-motion-state-map (kbd "SPC") #'avy-goto-word-1)
 (define-key evil-motion-state-map (kbd "C-SPC") #'avy-goto-char)
@@ -257,6 +275,44 @@
                               (neotree-mode . emacs)
                               (wdired-mode . normal))
       do (evil-set-initial-state mode state))
+
+
+(require 'evil-multiedit)
+;; Part of using the evil-multiedit
+;; Highlights all matches of the selection in the buffer.
+(define-key evil-visual-state-map "R" 'evil-multiedit-match-all)
+
+;; Match the word under cursor (i.e. make it an edit region). Consecutive presses will
+;; incrementally add the next unmatched match.
+(define-key evil-normal-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
+;; Match selected region.
+(define-key evil-visual-state-map (kbd "M-d") 'evil-multiedit-match-and-next)
+
+;; Same as M-d but in reverse.
+(define-key evil-normal-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
+(define-key evil-visual-state-map (kbd "M-D") 'evil-multiedit-match-and-prev)
+
+;; OPTIONAL: If you prefer to grab symbols rather than words, use
+;; `evil-multiedit-match-symbol-and-next` (or prev).
+
+;; Restore the last group of multiedit regions.
+(define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-match-and-prev)
+(define-key evil-visual-state-map (kbd "C-M-d") 'evil-multiedit-restore)
+
+;; RET will toggle the region under the cursor
+(define-key evil-multiedit-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+;; ...and in visual mode, RET will disable all fields outside the selected region
+(define-key evil-motion-state-map (kbd "RET") 'evil-multiedit-toggle-or-restrict-region)
+
+;; For moving between edit regions
+(define-key evil-multiedit-state-map (kbd "C-n") 'evil-multiedit-next)
+(define-key evil-multiedit-state-map (kbd "C-p") 'evil-multiedit-prev)
+(define-key evil-multiedit-insert-state-map (kbd "C-n") 'evil-multiedit-next)
+(define-key evil-multiedit-insert-state-map (kbd "C-p") 'evil-multiedit-prev)
+
+;; Ex command that allows you to invoke evil-multiedit with a regular expression, e.g.
+(evil-ex-define-cmd "ie[dit]" 'evil-multiedit-ex-match)
 
 ;; JAVA setting
 ;; (require 'company)
