@@ -82,7 +82,7 @@
 
 ;; Override the original key binding or setting for personal usage
 ;; Scroll the page when 8 line before the cursor. The scroll is not reseted to the center.
-setq scroll-conservatively 101)
+(setq scroll-conservatively 101)
 
 (setq scroll-margin 8)
 ;; Set the initial size of opening Emacs
