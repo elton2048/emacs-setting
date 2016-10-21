@@ -27,7 +27,8 @@
    [default default default italic underline success warning error])
  '(bmkp-last-as-first-bookmark-file "/home/elee/.emacs.d/bookmarks")
  '(company-dabbrev-downcase nil)
- '(company-idle-delay 0)
+ '(company-idle-delay 0.35)
+ '(crux-reopen-as-root-mode t)
  '(custom-enabled-themes (quote (tango-dark)))
  '(display-time-24hr-format t)
  '(display-time-day-and-date t)
@@ -50,7 +51,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-	(evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	(smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -62,11 +63,13 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "#453944" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "PfEd" :family "Inconsolata"))))
  '(company-scrollbar-bg ((t (:background "antique white"))))
  '(company-scrollbar-fg ((t (:background "SlateBlue2"))))
  '(company-tooltip ((t (:background "gray67" :foreground "black"))))
  '(company-tooltip-selection ((t (:background "cadet blue" :foreground "snow"))))
- '(mode-line ((t :foreground "#505050" :background "#D3D3D3" :inverse-video nil :box (quote (:line-width 60 :color "#FFF000" :style nil))))))
+ '(mode-line ((t (:background "DarkSeaGreen4" :foreground "light yellow" :inverse-video nil :box (:line-width 2 :style pressed-button)))))
+ '(sml/global ((t (:foreground "gray90" :inverse-video nil)))))
 
 ;; Require MELPA packages
 (when (>= emacs-major-version 24)
@@ -79,7 +82,7 @@
 
 ;; Override the original key binding or setting for personal usage
 ;; Scroll the page when 8 line before the cursor. The scroll is not reseted to the center.
-(setq scroll-conservatively 101)
+setq scroll-conservatively 101)
 
 (setq scroll-margin 8)
 ;; Set the initial size of opening Emacs
@@ -96,18 +99,23 @@
 (global-linum-mode 1)
 ;; Using helm-M-x using Ctrl-Meta-x
 (global-set-key (kbd "C-M-x") 'helm-M-x)
-;; Display the time in the Emacs
-(display-time)
-(global-aggressive-indent-mode 1)
-
-;; Setting of the indent-guide mode(indent-guide.el)
+;; ;; Setting of the indent-guide mode(indent-guide.el)
 (indent-guide-global-mode)
 (set-face-background 'indent-guide-face "transparent")
 (set-face-foreground 'indent-guide-face "yellow")
 
+(require 'dired)
+(require 'dired-x)
+(require 'dired+)
+(setq dired-omit-mode t)				; Turn on Omit mode
+
+(require 'org-bullets)
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 ;; Require plugin undo-tree
 (require 'undo-tree)
 
+;; Require Which-Key plugin
+(require 'which-key)
 ;; Rainbow mode
 (define-globalized-minor-mode global-rainbow-mode
   rainbow-mode
@@ -120,7 +128,6 @@
 ;; ido mode
 (require 'ido)
 (ido-mode t)
-
 
 ;; Require highlight parenthese
 (require 'highlight-parentheses)
@@ -191,7 +198,7 @@
 (window-number-mode)
 (window-number-meta-mode)
 
-;; (require 'multiple-cursors)
+(require 'multiple-cursors)
 ;; Anaconda-mode setting
 (add-hook 'python-mode-hook #'anaconda-mode)
 (with-eval-after-load "anaconda"
@@ -215,16 +222,22 @@
   (web-mode-reload)
   (web-mode-buffer-indent)
   )
+
+;; Key binding setting
+(define-key global-map (kbd "M-x") 'helm-M-x)
 (define-key global-map (kbd "M-n") 'scroll-up)
 (define-key global-map (kbd "M-p") 'scroll-down)
-
-;; (define-key global-map (kbd "M-d") 'scroll-up-half)
-;; (define-key global-map (kbd "M-u") 'scroll-down-half)
+(global-set-key [remap move-beginning-of-line] #'crux-move-beginning-of-line)
+;; Avy key setting
+(define-key global-map (kbd "M-g M-g") 'avy-goto-line)
+(define-key global-map (kbd "C-,") 'avy-goto-char-timer)
 
 (define-key global-map [f12] 'helm-swoop)
 (define-key global-map [C-f12] 'helm-multi-swoop)
+
 (define-key global-map [f6] 'eval-buffer)
 (define-key global-map [f7] 'evil-mode)
+(define-key global-map [f9] 'god-mode)
 (define-key web-mode-map [f5] 'web-mode-refresh)
 (define-key evil-motion-state-map (kbd "SPC") #'avy-goto-word-1)
 (define-key evil-motion-state-map (kbd "C-SPC") #'avy-goto-char)
