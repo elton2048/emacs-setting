@@ -99,7 +99,7 @@
 
 ;; Set the default indentation of using Emacs
 (setq-default indent-tabs-node nil)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 (setq indent-line-funtion 'insert-tab)
 (setq org-log-done 'time)
 ;; Setting the number line on the left side
