@@ -7,6 +7,13 @@
 (load "test")
 (load "check")
 
+(setq org-directory "~/notes")
+(setq org-agenda-files '("~/notes/tasks.org"))
+(setq org-mobile-directory "~/Dropbox/OrgNotes")
+(setq org-mobile-files
+	  (quote ("~/notes/development.org"
+			  )))
+(setq org-mobile-inbox-for-pull "~/notes/development.org")
 ;; (load-file "~/.emacs.d/evernote-mode.el")
 
 ;; (require 'evernote-mode)
@@ -51,7 +58,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-	(smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	(pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
