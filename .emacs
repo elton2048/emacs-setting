@@ -1,7 +1,7 @@
-(add-to-list 'load-path "/home/elee/.emacs.d/indent-guide/")
-(load "indent-guide")
+;;(add-to-list 'load-path "/home/elee/.emacs.d/indent-guide/")
+;;(load "indent-guide")
 
-(add-to-list 'load-path "/home/elee/.emacs.d/settings/")
+(add-to-list 'load-path "~/.emacs.d/settings/")
 
 (load "customfunction")
 (load "test")
@@ -12,8 +12,13 @@
 (setq org-mobile-directory "~/Dropbox/OrgNotes")
 (setq org-mobile-files
 	  (quote ("~/notes/development.org"
+			  "~/notes/work.org"
+				"~/notes/daily_work.org"
 			  )))
-(setq org-mobile-inbox-for-pull "~/notes/development.org")
+(setq org-mobile-inbox-for-pull 
+			;;"~/notes/development.org"
+			"~/notes/work.org"
+)
 ;; (load-file "~/.emacs.d/evernote-mode.el")
 
 ;; (require 'evernote-mode)
@@ -31,8 +36,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(bmkp-last-as-first-bookmark-file "/home/elee/.emacs.d/bookmarks")
+	 [default default default italic underline success warning error])
+ '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
  '(company-dabbrev-downcase nil)
  '(company-idle-delay 0.35)
  '(crux-reopen-as-root-mode t)
@@ -41,24 +46,24 @@
  '(display-time-day-and-date t)
  '(electric-indent-mode nil)
  '(evil-overriding-maps
-   (quote
-	((Buffer-menu-mode-map)
-	 (color-theme-mode-map)
-	 (comint-mode-map)
-	 (compilation-mode-map)
-	 (grep-mode-map)
-	 (dictionary-mode-map)
-	 (ert-results-mode-map . motion)
-	 (Info-mode-map . motion)
-	 (speedbar-key-map)
-	 (speedbar-file-key-map)
-	 (speedbar-buffers-key-map)
-	 (anaconda-mode-map))))
+	 (quote
+		((Buffer-menu-mode-map)
+		 (color-theme-mode-map)
+		 (comint-mode-map)
+		 (compilation-mode-map)
+		 (grep-mode-map)
+		 (dictionary-mode-map)
+		 (ert-results-mode-map . motion)
+		 (Info-mode-map . motion)
+		 (speedbar-key-map)
+		 (speedbar-file-key-map)
+		 (speedbar-buffers-key-map)
+		 (anaconda-mode-map))))
  '(global-aggressive-indent-mode t)
  '(menu-bar-mode nil)
  '(package-selected-packages
-   (quote
-	(pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	 (quote
+		(emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -70,7 +75,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#453944" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 120 :width normal :foundry "PfEd" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :stipple nil :background "#453944" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "nil" :family "Inconsolata"))))
  '(company-scrollbar-bg ((t (:background "antique white"))))
  '(company-scrollbar-fg ((t (:background "SlateBlue2"))))
  '(company-tooltip ((t (:background "gray67" :foreground "black"))))
@@ -88,6 +93,7 @@
   (package-initialize))
 
 ;; Override the original key binding or setting for personal usage
+(electric-indent-mode +1)
 ;; Scroll the page when 8 line before the cursor. The scroll is not reseted to the center.
 (setq scroll-conservatively 101)
 
@@ -159,6 +165,8 @@
 (evil-mode 1)
 (define-key evil-motion-state-map (kbd "M-.") nil)
 
+(require 'evil-org)
+
 ;; Helm mode
 (require 'helm-config)
 (helm-mode 1)
@@ -171,6 +179,8 @@
 (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+(require 'emmet-mode)
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
@@ -273,11 +283,14 @@
 (defun my-web-mode-hook()
   "Hook for indentation."
   (setq web-mode-indent-offset 0)
+	(setq web-mode-code-indent-offset 2)
   (setq-local electric-indent-chars
 			  (append "{}():;," electric-indent-chars))
+	;;(local-set-key (kbd "RET") 'newline-and-indent)
   )
 (add-hook 'web-mode-hook 'my-web-mode-hook)
 (add-hook 'web-mode-hook 'electric-pair-mode)
+
 
 (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
                               (nrepl-mode . insert)
