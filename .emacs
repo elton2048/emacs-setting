@@ -1,7 +1,8 @@
-;;(add-to-list 'load-path "/home/elee/.emacs.d/indent-guide/")
-;;(load "indent-guide")
+(add-to-list 'load-path "~/.emacs.d/indent-guide/")
+(load "indent-guide")
 
 (add-to-list 'load-path "~/.emacs.d/settings/")
+(add-to-list 'load-path "~/.emacs.d/download_plugins/yasnippets-rails/rails-snippets")
 
 (load "customfunction")
 (load "test")
@@ -11,14 +12,14 @@
 (setq org-agenda-files '("~/notes/tasks.org"))
 (setq org-mobile-directory "~/Dropbox/OrgNotes")
 (setq org-mobile-files
-	  (quote ("~/notes/development.org"
-			  "~/notes/work.org"
-				"~/notes/daily_work.org"
-			  )))
+			(quote ("~/notes/development.org"
+							"~/notes/work.org"
+							"~/notes/daily_work.org"
+							)))
 (setq org-mobile-inbox-for-pull 
 			;;"~/notes/development.org"
 			"~/notes/work.org"
-)
+			)
 ;; (load-file "~/.emacs.d/evernote-mode.el")
 
 ;; (require 'evernote-mode)
@@ -75,7 +76,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :background "#453944" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 150 :width normal :foundry "nil" :family "Inconsolata"))))
+ '(default ((t (:inherit nil :stipple nil :background "#453944" :foreground "#eeeeec" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight bold :height 130 :width normal :foundry "nil" :family "Inconsolata"))))
  '(company-scrollbar-bg ((t (:background "antique white"))))
  '(company-scrollbar-fg ((t (:background "SlateBlue2"))))
  '(company-tooltip ((t (:background "gray67" :foreground "black"))))
@@ -100,7 +101,7 @@
 (setq scroll-margin 8)
 ;; Set the initial size of opening Emacs
 (setq initial-frame-alist
-	  '((top . 30) (left . 1) (width . 140) (height . 40)))
+			'((top . 30) (left . 1) (width . 140) (height . 40)))
 (global-set-key "\C-x\C-b" 'buffer-menu)
 
 ;; Set the default indentation of using Emacs
@@ -129,6 +130,7 @@
 
 ;; Require Which-Key plugin
 (require 'which-key)
+(which-key-mode t)
 ;; Rainbow mode
 (define-globalized-minor-mode global-rainbow-mode
   rainbow-mode
@@ -161,9 +163,9 @@
 
 ;; Evil setting, Vim plugin for Emacs
 (setq evil-want-C-u-scroll t)
-(require 'evil)
-(evil-mode 1)
-(define-key evil-motion-state-map (kbd "M-.") nil)
+;; (require 'evil)
+;; (evil-mode 1)
+;; (define-key evil-motion-state-map (kbd "M-.") nil)
 
 (require 'evil-org)
 
@@ -179,6 +181,8 @@
 (add-to-list 'auto-mode-alist '("\\.php$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.json$" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+
+(add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 (require 'emmet-mode)
 
@@ -220,13 +224,14 @@
 (add-hook 'python-mode-hook #'anaconda-mode)
 (with-eval-after-load "anaconda"
   (define-key anaconda-mode-map (kbd "M-.") #'anaconda-mode-find-definitions)
-)
+	)
 
 ;; Yasnippet setting
 (require 'yasnippet)
 (add-hook 'web-mode-hook #'(lambda () (yas-activate-extra-mode 'html-mode)))
 (yas-global-mode 1)
 (yas-reload-all 1)
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/download_plugins/yasnippets-rails/rails-snippets/")
 
 ;; YAML mode
 (require 'yaml-mode)
@@ -275,8 +280,8 @@
                               (dired-mode . emacs)
                               (neotree-mode . emacs)
                               (wdired-mode . normal)
-							  (help-mode . emacs)
-							  (paradox-menu-mode . emacs))
+															(help-mode . emacs)
+															(paradox-menu-mode . emacs))
       do (evil-set-initial-state mode state))
 (add-hook 'after-init-hook 'global-company-mode)
 
@@ -285,7 +290,7 @@
   (setq web-mode-indent-offset 0)
 	(setq web-mode-code-indent-offset 2)
   (setq-local electric-indent-chars
-			  (append "{}():;," electric-indent-chars))
+							(append "{}():;," electric-indent-chars))
 	;;(local-set-key (kbd "RET") 'newline-and-indent)
   )
 (add-hook 'web-mode-hook 'my-web-mode-hook)
