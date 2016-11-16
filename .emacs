@@ -64,7 +64,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
 	 (quote
-		(emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+		(expand-region emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -185,6 +185,9 @@
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 (require 'emmet-mode)
+
+(require 'expand-region)
+(global-set-key (kbd "C-=") 'er/expand-region)
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
