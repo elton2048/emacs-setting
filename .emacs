@@ -1,8 +1,9 @@
 (add-to-list 'load-path "~/.emacs.d/indent-guide/")
-(load "indent-guide")
+
 
 (add-to-list 'load-path "~/.emacs.d/settings/")
 (add-to-list 'load-path "~/.emacs.d/download_plugins/yasnippets-rails/rails-snippets")
+(add-to-list 'load-path "~/.emacs.d/snippets")
 
 (load "customfunction")
 (load "test")
@@ -117,6 +118,8 @@
 (indent-guide-global-mode)
 (set-face-background 'indent-guide-face "transparent")
 (set-face-foreground 'indent-guide-face "yellow")
+
+(load "indent-guide")
 
 (require 'dired)
 (require 'dired-x)
