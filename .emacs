@@ -3,7 +3,7 @@
 
 (add-to-list 'load-path "~/.emacs.d/settings/")
 (add-to-list 'load-path "~/.emacs.d/download_plugins/yasnippets-rails/rails-snippets")
-(add-to-list 'load-path "~/.emacs.d/snippets")
+(add-to-list 'load-path "~/.emacs.d/snippets/")
 
 (load "customfunction")
 (load "test")
@@ -26,11 +26,11 @@
 ;; (require 'evernote-mode)
 
 ;; Using superuser to modify the file if necessary
-(defadvice ido-find-file (after find-file-sudo activate)
-  "Find file as root if necessary."
-  (unless (and buffer-file-name
-               (file-writable-p buffer-file-name))
-    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+;; (defadvice ido-find-file (after find-file-sudo activate)
+;;   "Find file as root if necessary."
+;;   (unless (and buffer-file-name
+;;                (file-writable-p buffer-file-name))
+;;     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -107,7 +107,7 @@
 
 ;; Set the default indentation of using Emacs
 (setq-default indent-tabs-node nil)
-(setq-default tab-width 2)
+(setq-default tab-width 4)
 (setq indent-line-funtion 'insert-tab)
 (setq org-log-done 'time)
 ;; Setting the number line on the left side
@@ -238,6 +238,7 @@
 (yas-global-mode 1)
 (yas-reload-all 1)
 (add-to-list 'yas-snippet-dirs "~/.emacs.d/download_plugins/yasnippets-rails/rails-snippets/")
+(add-to-list 'yas-snippet-dirs "~/.emacs.d/snippets/codeigniter/")
 
 ;; YAML mode
 (require 'yaml-mode)
