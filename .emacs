@@ -38,8 +38,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ansi-color-faces-vector
-	 [default default default italic underline success warning error])
- '(bmkp-last-as-first-bookmark-file "~/.emacs.d/bookmarks")
+   [default default default italic underline success warning error])
+ '(bmkp-last-as-first-bookmark-file "/Users/elton/.emacs.d/bookmarks")
  '(company-dabbrev-downcase nil)
  '(company-idle-delay 0.35)
  '(crux-reopen-as-root-mode t)
@@ -48,24 +48,24 @@
  '(display-time-day-and-date t)
  '(electric-indent-mode nil)
  '(evil-overriding-maps
-	 (quote
-		((Buffer-menu-mode-map)
-		 (color-theme-mode-map)
-		 (comint-mode-map)
-		 (compilation-mode-map)
-		 (grep-mode-map)
-		 (dictionary-mode-map)
-		 (ert-results-mode-map . motion)
-		 (Info-mode-map . motion)
-		 (speedbar-key-map)
-		 (speedbar-file-key-map)
-		 (speedbar-buffers-key-map)
-		 (anaconda-mode-map))))
+   (quote
+	((Buffer-menu-mode-map)
+	 (color-theme-mode-map)
+	 (comint-mode-map)
+	 (compilation-mode-map)
+	 (grep-mode-map)
+	 (dictionary-mode-map)
+	 (ert-results-mode-map . motion)
+	 (Info-mode-map . motion)
+	 (speedbar-key-map)
+	 (speedbar-file-key-map)
+	 (speedbar-buffers-key-map)
+	 (anaconda-mode-map))))
  '(global-aggressive-indent-mode t)
  '(menu-bar-mode nil)
  '(package-selected-packages
-	 (quote
-		(expand-region emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+   (quote
+	(expand-region emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -188,6 +188,9 @@
 (add-to-list 'auto-mode-alist '("\\.erb$" . rhtml-mode))
 
 (require 'emmet-mode)
+
+;; Enable elscreen
+(elscreen-start)
 
 (require 'expand-region)
 (global-set-key (kbd "C-=") 'er/expand-region)
