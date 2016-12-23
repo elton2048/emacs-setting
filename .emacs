@@ -306,6 +306,9 @@
 (add-hook 'web-mode-hook 'my-web-mode-hook)
 (add-hook 'web-mode-hook 'electric-pair-mode)
 
+;; Hook for disable electric-pair-mode in django html
+(add-hook 'web-mode-hook 'django-html-hook)
+
 
 (loop for (mode . state) in '((inferior-emacs-lisp-mode . emacs)
                               (nrepl-mode . insert)
