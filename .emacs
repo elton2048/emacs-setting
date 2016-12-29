@@ -65,7 +65,7 @@
  '(menu-bar-mode nil)
  '(package-selected-packages
    (quote
-	(expand-region emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
+	(python-mode expand-region emmet-mode evil-org helm-projectile projectile edbi indent-guide pdf-tools smart-mode-line org-bullets dired+ crux which-key god-mode anaconda-mode elpy evil-multiedit aggressive-indent helm-swoop magit rainbow-mode company yasnippet yaml-mode window-numbering window-number web-mode typescript-mode smartparens sass-mode highlight-parentheses helm evil color-theme bookmark+ avy-flycheck)))
  '(paradox-github-token t)
  '(python-shell-interpreter-args "")
  '(tool-bar-mode nil)
@@ -270,6 +270,7 @@
 (define-key global-map [f6] 'eval-buffer)
 (define-key global-map [f7] 'evil-mode)
 (define-key global-map [f9] 'god-mode)
+(define-key global-map (kbd "<C-return>") 'newline-without-break-of-line)
 (define-key web-mode-map [f5] 'web-mode-refresh)
 (define-key evil-motion-state-map (kbd "SPC") #'avy-goto-word-1)
 (define-key evil-motion-state-map (kbd "C-SPC") #'avy-goto-char)
