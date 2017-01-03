@@ -263,6 +263,7 @@
 ;; Avy key setting
 (define-key global-map (kbd "M-g M-g") 'avy-goto-line)
 (define-key global-map (kbd "C-,") 'avy-goto-char-timer)
+(define-key global-map (kbd "C-.") 'avy-goto-word-end)
 
 (define-key global-map [f12] 'helm-swoop)
 (define-key global-map [C-f12] 'helm-multi-swoop)

@@ -31,3 +31,8 @@
     (end-of-line)
     (newline-and-indent)))
   
+(defun avy-goto-word-end ()
+  "Jump to the end of the word."
+  (interactive)
+  (avy-goto-char-timer)
+  (forward-word))
